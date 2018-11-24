@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 
 //import PageHeader from "./components/PageHeader";
-// import amazonDates from "./images/AmazonDates.svg";
+// import navigationTab from "./components/NavigationTabs";
 import WelcomePage from "./WelcomePage";
 import SignIn from "./SignIn";
 import Home from "./Home";
+import Matches from "./Matches";
 import "./App.scss";
 
 class App extends Component {
@@ -23,6 +24,7 @@ class App extends Component {
     }
   };
   render() {
+   
     const { page } = this.state;
     let curPage;
 
@@ -31,7 +33,9 @@ class App extends Component {
     } else if (page === "SignIn") {
       curPage = <SignIn navigate={this.handleNavigation} />;
     } else if (page === "Home") {
-      curPage = <Home />;
+      curPage = <Home navigate={this.handleNavigation}/>;
+    } else if(page === "Matches"){
+      curPage = <Matches navigate={this.handleNavigation}/>
     }
     return <div className="App">{curPage}</div>;
   }

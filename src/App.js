@@ -41,7 +41,7 @@ class App extends Component {
     }
   };
 
-handleStartConvo = match=> () => {
+handleStartConvo = (match)=> () => {
   console.log(match);
   let conversations = this.state.conversations;
   let matches = this.state.matches;
@@ -51,13 +51,15 @@ handleStartConvo = match=> () => {
   }
   if(match.new === true){
     matches[index].new = false;
-    
   }
   matches.sort((a,b) => (a.new < b.new) ? 1 : -1);
   this.setState({
     consversations: conversations,
-    matches: matches
+    matches: matches,
   });
+  this.setState({
+    page:"Current Conversations"
+  })
 };
   
   render() 
@@ -75,7 +77,7 @@ handleStartConvo = match=> () => {
     } else if(page === "Matches"){
       curPage = <Matches navigate={this.handleNavigation} matches={matches} startConvo={this.handleStartConvo} conversations={conversations}/>
     }else if (page === "Current Conversations"){
-      curPage = <Conversations navigate={this.handleNavigation}/>
+      curPage = <Conversations navigate={this.handleNavigation} conversations={conversations}/>
     }
     return <div className="App">{curPage}</div>;
   }

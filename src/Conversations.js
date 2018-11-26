@@ -1,12 +1,51 @@
 import React, { Component } from "react";
-// import faker from "faker";
+import faker from "faker";
 import PageHeader from "./components/PageHeader";
 import NavTabs from "./components/NavigationTabs";
+import "./Conversations.scss";
+
+
 
 class Conversations extends Component {
   render() {
-    const { navigate } = this.props;
-
+    const { navigate, conversations } = this.props;
+const currentConvo = conversations.map(info =>{
+    const topics = faker.random.arrayElement(["hiking", "the cinema", "to travel"]);
+    return(
+        <div className="col-3 mx-1 convoBox" key={info.name}>
+        <div className="row convoBoxHeader">
+          <div className="col-4 p-2">
+            <img className="img" src={info.img} alt="img" />
+          </div>
+          <div className="d-flex col-6 align-self-center p-0">
+            <span>
+              <strong>{info.name}</strong>
+            </span>
+          </div>
+        </div>
+        <div className="row topic">
+          <div className="col-11 align-self-start">
+            <span>
+              {info.name + " also enjoys " + topics}
+            </span>
+          </div>
+        </div>
+        <div className="row justify-content-start">
+          <div className="col-10 p-0 align-self-start recieved">
+            <img
+              className="smallImg pr-1 pt-1"
+              src={info.img}
+              alt="img"
+            />
+            {faker.lorem.words(4)}
+          </div>
+        </div>
+        <div className="row justify-content-end">
+          <div className="col-10 sent">{faker.lorem.words(4)}</div>
+        </div>
+      </div>
+    )
+})
     return (
       <div className="Matches">
         <div className="container">
@@ -18,6 +57,9 @@ class Conversations extends Component {
                 <strong>Conversations</strong>
               </p>
             </div>
+          </div>
+          <div className="row justify-content-end">
+ {currentConvo}
           </div>
         </div>
       </div>

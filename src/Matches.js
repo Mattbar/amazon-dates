@@ -13,7 +13,7 @@ class Matches extends Component {
         <div className="col-2 img" key={info.name}>
           <img
             onClick={startConvo(info)}
-            className={info.active ? "active" : "notActive"}
+            className={info.new ? "active" : "notActive"}
             src={info.img}
             alt="match"
           />

@@ -27,6 +27,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      userImg: faker.image.avatar(),
       page: "WelcomePage",
       matches:handleMakeMatches(),
       conversations:[]
@@ -42,7 +43,6 @@ class App extends Component {
   };
 
 handleStartConvo = (match)=> () => {
-  console.log(match);
   let conversations = this.state.conversations;
   let matches = this.state.matches;
   let index = this.state.matches.findIndex(a => a.name === match.name);
@@ -65,7 +65,7 @@ handleStartConvo = (match)=> () => {
   render() 
   
   {
-    const { page, matches, conversations } = this.state;
+    const { page, matches, conversations, userImg } = this.state;
     let curPage;
     
     if (page === "WelcomePage") {
@@ -73,11 +73,11 @@ handleStartConvo = (match)=> () => {
     } else if (page === "SignIn") {
       curPage = <SignIn navigate={this.handleNavigation} />;
     } else if (page === "Home") {
-      curPage = <Home navigate={this.handleNavigation}/>;
+      curPage = <Home navigate={this.handleNavigation} userImg={userImg}/>;
     } else if(page === "Matches"){
       curPage = <Matches navigate={this.handleNavigation} matches={matches} startConvo={this.handleStartConvo} conversations={conversations}/>
     }else if (page === "Current Conversations"){
-      curPage = <Conversations navigate={this.handleNavigation} conversations={conversations}/>
+      curPage = <Conversations navigate={this.handleNavigation} conversations={conversations} userImg={userImg}/>
     }
     return <div className="App">{curPage}</div>;
   }

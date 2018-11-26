@@ -1,0 +1,37 @@
+.Matches {
+    width: 100vw;
+    height: 100vh;
+    background-image: url("./images/HomeBackground.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  .header{
+      font-size: 30px;
+  }
+  .matchesQue{
+   
+    & .img{
+        
+        & .active{
+            border-radius: 50%;
+            border: dashed 4px red;
+            width: 75px;
+            height: auto;
+        }
+
+        & .notActive{
+            border-radius: 50%;
+            width: 75px;
+            height: auto;
+        }
+  
+    }
+  }
+
+  .matchName{
+      font-size: 20px;
+  }
+  .queView{
+      border-bottom: solid 3px black;
+  }
+  

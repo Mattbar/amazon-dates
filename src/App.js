@@ -6,13 +6,30 @@ import WelcomePage from "./WelcomePage";
 import SignIn from "./SignIn";
 import Home from "./Home";
 import Matches from "./Matches";
+import Conversations from "./Conversations";
 import "./App.scss";
+import faker from "faker";
 
+const handleMakeMatches =() =>{
+  let numbMatch = faker.random.number({min:1, max:4});
+  let matches = [];
+  for(let i= 0; i<numbMatch; i++){
+    matches.push({
+      new: faker.random.boolean(),
+      img: faker.image.avatar(),
+      name: faker.name.findName()
+    });
+  }
+  matches.sort((a,b) => (a.new < b.new) ? 1 : -1);
+  return matches;
+}
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      page: "WelcomePage"
+      page: "WelcomePage",
+      matches:handleMakeMatches(),
+      conversations:[]
     };
   }
 
@@ -23,11 +40,32 @@ class App extends Component {
       });
     }
   };
-  render() {
-   
-    const { page } = this.state;
-    let curPage;
 
+handleStartConvo = match=> () => {
+  console.log(match);
+  let conversations = this.state.conversations;
+  let matches = this.state.matches;
+  let index = this.state.matches.findIndex(a => a.name === match.name);
+  if(index !== -1){
+    conversations.push(match)
+  }
+  if(match.new === true){
+    matches[index].new = false;
+    
+  }
+  matches.sort((a,b) => (a.new < b.new) ? 1 : -1);
+  this.setState({
+    consversations: conversations,
+    matches: matches
+  });
+};
+  
+  render() 
+  
+  {
+    const { page, matches, conversations } = this.state;
+    let curPage;
+    
     if (page === "WelcomePage") {
       curPage = <WelcomePage navigate={this.handleNavigation} />;
     } else if (page === "SignIn") {
@@ -35,7 +73,9 @@ class App extends Component {
     } else if (page === "Home") {
       curPage = <Home navigate={this.handleNavigation}/>;
     } else if(page === "Matches"){
-      curPage = <Matches navigate={this.handleNavigation}/>
+      curPage = <Matches navigate={this.handleNavigation} matches={matches} startConvo={this.handleStartConvo} conversations={conversations}/>
+    }else if (page === "Current Conversations"){
+      curPage = <Conversations navigate={this.handleNavigation}/>
     }
     return <div className="App">{curPage}</div>;
   }

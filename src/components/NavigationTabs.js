@@ -6,7 +6,7 @@ const navLocations = [
   "PAG",
   "Current Conversations",
   "Account Settings",
-  "Home Page"
+  "Home"
 ];
 
 

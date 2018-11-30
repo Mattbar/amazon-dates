@@ -1,37 +1,41 @@
 .Matches {
-    width: 100vw;
-    height: 100vh;
-    background-image: url("./images/HomeBackground.png");
-    background-repeat: no-repeat;
-    background-size: cover;
-  }
-  .header{
-      font-size: 30px;
-  }
-  .matchesQue{
-   
-    & .img{
-        
-        & .active{
-            border-radius: 50%;
-            border: dashed 4px red;
-            width: 75px;
-            height: auto;
-        }
+  width: 100vw;
+  height: 100vh;
+  background-image: url("./images/HomeBackground.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
 
-        & .notActive{
-            border-radius: 50%;
-            width: 75px;
-            height: auto;
-        }
-  
-    }
+.header {
+  font-size: 30px;
+}
+.imgs .active {
+  position: absolute;
+  top: -1px;
+  bottom: 75px;
+  left: 30px;
+  right: 31px;
+  background: transparent;
+  border-radius: 50%;
+  border: 4px dashed red;
+  animation: spin 10s linear infinite;
+}
+@keyframes spin {
+  100% {
+    transform: rotateZ(360deg);
   }
+}
+.img {
+  align-self: center;
+  border-radius: 50%;
+}
+.notActive {
+  border-radius: 50%;
+}
 
-  .matchName{
-      font-size: 20px;
-  }
-  .queView{
-      border-bottom: solid 3px black;
-  }
-  
+.matchName {
+  font-size: 20px;
+}
+.queView {
+  border-bottom: solid 3px black;
+}

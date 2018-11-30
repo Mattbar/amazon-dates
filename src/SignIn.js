@@ -2,14 +2,12 @@ import React, { Component } from "react";
 import "./SignIn.scss";
 import UserSignIn from "./images/UserSignIn.svg";
 import AddAccountCross from "./images/AddAccountCross.svg";
-import PageHeader from "./components/PageHeader";
+
 
 class SignIn extends Component {
   render() {
     const { navigate } = this.props;
     return (
-      <div className="container">
-        <PageHeader />
         <div className={`container  signInButtons`}>
           <div className="row p-0 justify-content-center">
             <button
@@ -26,7 +24,7 @@ class SignIn extends Component {
             </div>
           </div>
         </div>
-      </div>
+      
     );
   }
 }

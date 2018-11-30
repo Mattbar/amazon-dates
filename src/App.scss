@@ -10,3 +10,13 @@
   width: inherit;
   height: inherit;
 }
+.backGround{
+    width: 100vw;
+    height: 100vh;
+    background-image: url("./images/HomeBackground.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.welcome{
+  color: black;
+}

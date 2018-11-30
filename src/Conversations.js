@@ -1,12 +1,11 @@
 import React, { Component } from "react";
 import faker from "faker";
-import PageHeader from "./components/PageHeader";
-import NavTabs from "./components/NavigationTabs";
+
 import "./Conversations.scss";
 
 class Conversations extends Component {
   render() {
-    const { navigate, conversations, userImg } = this.props;
+    const { conversations, userImg } = this.props;
     const currentConvo = conversations.map(info => {
       const topics = faker.random.arrayElement([
         "hiking",
@@ -41,27 +40,23 @@ class Conversations extends Component {
               {faker.lorem.words(4)}
             </div>
             <div className="col-2 p-0">
-            <img className="smallImg pl-1 pt-1" src={userImg} alt="img" />
+              <img className="smallImg pl-1 pt-1" src={userImg} alt="img" />
             </div>
           </div>
         </div>
       );
     });
     return (
-      <div className="Matches">
-        <div className="container">
-          <PageHeader />
-          <NavTabs navigate={navigate} />
-          <div className="row">
-            <div className="col-3">
-              <p className="header">
-                <strong>Conversations</strong>
-              </p>
-            </div>
+      <React.Fragment>
+        <div className="row">
+          <div className="col-3">
+            <p className="header">
+              <strong>Conversations</strong>
+            </p>
           </div>
-          <div className="row justify-content-end">{currentConvo}</div>
         </div>
-      </div>
+        <div className="row justify-content-end">{currentConvo}</div>
+      </React.Fragment>
     );
   }
 }

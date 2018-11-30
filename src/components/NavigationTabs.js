@@ -14,10 +14,16 @@ const navLocations = [
 class NavigationTabs extends Component {
   render()
   {
-    
     const navBar = navLocations.map(nav => {
+      let active;
+      if(nav === this.props.page){
+        active="active";
+      }
+      else{
+        active="";
+      }
       return (
-        <button  onClick={this.props.navigate(nav)}className="d-flex col-2 align-items-center justify-content-center navBox" key={nav}>
+        <button  onClick={this.props.navigate(nav)}className={`d-flex col-2 align-items-center justify-content-center navBox ${active}`} key={nav}>
           <strong>
             {nav}
           </strong>

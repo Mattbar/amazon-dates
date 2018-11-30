@@ -1,19 +1,20 @@
 import React, { Component } from "react";
 import "./Home.scss";
 
-class Home extends Component {
+
+class AccountSettings extends Component {
   render() {
-    const { userImg } = this.props;
     return (
-      
           <div className="container p-5">
             <div className="row">
               <div className="col">
-                <img className="userImg" src={userImg} alt="img" />
+                <h1>
+                Account Settings
+                </h1>
               </div>
             </div>
           </div>
     );
   }
 }
-export default Home;
+export default AccountSettings;

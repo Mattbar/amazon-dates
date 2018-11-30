@@ -22,9 +22,11 @@ const handleMakeMatches = () => {
       name: faker.name.findName()
     });
   }
+
   matches.sort((a, b) => (a.new < b.new ? 1 : -1));
   return matches;
 };
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -33,11 +35,23 @@ class App extends Component {
       userImg: faker.image.avatar(),
       page: "WelcomePage",
       matches: handleMakeMatches(),
+      newMatches: null,
       conversations: []
     };
   }
 
   handleNavigation = page => () => {
+    if (this.state.newMatches == null) {
+      let isNew = 0;
+      for (let i = 0; i < this.state.matches.length; i++) {
+        if (this.state.matches[i].new) {
+          isNew++;
+        }
+      }
+      this.setState({
+        newMatches: isNew
+      });
+    }
     if (page !== this.state.page) {
       this.setState({
         page: page
@@ -51,21 +65,24 @@ class App extends Component {
     });
   };
 
-  handleStartConvo = (match) => () => {
-    console.log("start");
+  handleStartConvo = match => () => {
     let conversations = this.state.conversations;
     let matches = this.state.matches;
     let index = this.state.matches.findIndex(a => a.name === match.name);
+    let newMatch = this.state.newMatches
     if (index !== -1) {
       conversations.push(match);
     }
     if (match.new === true) {
       matches[index].new = false;
+      newMatch--
+      
     }
     matches.sort((a, b) => (a.new < b.new ? 1 : -1));
     this.setState({
       consversations: conversations,
-      matches: matches
+      matches: matches,
+      newMatches:newMatch
     });
     this.setState({
       page: "Current Conversations"
@@ -73,7 +90,14 @@ class App extends Component {
   };
 
   render() {
-    const { page, matches, conversations, userImg, PAGImg } = this.state;
+    const {
+      page,
+      matches,
+      conversations,
+      userImg,
+      PAGImg,
+      newMatches
+    } = this.state;
     let curPage;
     let background = "";
     let nav;
@@ -81,16 +105,33 @@ class App extends Component {
     if (page === "WelcomePage") {
       curPage = <WelcomePage navigate={this.handleNavigation} />;
     } else if (page === "SignIn") {
-      curPage = <SignIn navigate={this.handleNavigation} />;
+      curPage = (
+        <SignIn
+          navigate={this.handleNavigation}
+          
+        />
+      );
     } else if (page === "Account Settings") {
-      curPage = <AccountSettings navigate={this.handleNavigation}/>;
+      curPage = <AccountSettings navigate={this.handleNavigation} />;
       background = "backGround";
-      nav = <NavTabs navigate={this.handleNavigation} page={page} />
+      nav = (
+        <NavTabs
+          navigate={this.handleNavigation}
+          page={page}
+          newMatches={newMatches}
+        />
+      );
     } else if (page === "Home") {
       curPage = <Home navigate={this.handleNavigation} userImg={userImg} />;
       background = "backGround";
-      nav = <NavTabs navigate={this.handleNavigation} page={page} />
-    }else if (page === "Matches") {
+      nav = (
+        <NavTabs
+          navigate={this.handleNavigation}
+          page={page}
+          newMatches={newMatches}
+        />
+      );
+    } else if (page === "Matches") {
       curPage = (
         <Matches
           navigate={this.handleNavigation}
@@ -100,33 +141,42 @@ class App extends Component {
         />
       );
       background = "backGround";
-      nav = <NavTabs navigate={this.handleNavigation} page={page}/>
+      nav = (
+        <NavTabs
+          navigate={this.handleNavigation}
+          page={page}
+          newMatches={newMatches}
+        />
+      );
     } else if (page === "Current Conversations") {
       curPage = (
-        <Conversations
-          conversations={conversations}
-          userImg={userImg}
-        />
+        <Conversations conversations={conversations} userImg={userImg} />
       );
       background = "backGround";
-      nav = <NavTabs navigate={this.handleNavigation} page={page}/>
+      nav = (
+        <NavTabs
+          navigate={this.handleNavigation}
+          page={page}
+          newMatches={newMatches}
+        />
+      );
     } else if (page === "PAG") {
-      curPage = (
-        <PAG
-          
-          PAGImg={PAGImg}
-          hotOrNot={this.handleHotOrNot}
+      curPage = <PAG PAGImg={PAGImg} hotOrNot={this.handleHotOrNot} />;
+      background = "backGround";
+      nav = (
+        <NavTabs
+          navigate={this.handleNavigation}
+          page={page}
+          newMatches={newMatches}
         />
       );
-      background = "backGround";
-      nav = <NavTabs navigate={this.handleNavigation} page={page}/>
     }
     return (
       <div className="App">
         <div className={`${background}`}>
           <div className="container">
             <PageHeader />
-           {nav}  
+            {nav}
             {curPage}
           </div>
         </div>
